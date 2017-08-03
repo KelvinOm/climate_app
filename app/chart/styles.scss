@@ -1,0 +1,32 @@
+.graph {
+    position: relative;
+    margin-top: 40px;
+    width: 800px;
+    height: 210px;
+    overflow-y: scroll;
+    &__preloader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -16px 0 0 -32px;
+        width: 64px;
+        height: 64px;
+        background: url(/assets/images/loader.gif);
+        opacity: 1;
+        transition: opacity .3s linear;
+        &.hide {
+            opacity: 0;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    height: 7px;
+    width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+}
