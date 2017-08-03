@@ -5,10 +5,10 @@ export default class Controls {
     constructor() {
         this._render();
 
-        this._tabsCollection = this._elem.querySelectorAll(".tablink");
+        this._tabsCollection = this._elem.querySelectorAll(".tabs__button");
 
         this._elem.addEventListener("click", event => {
-            if (event.target.hasAttribute("data-tablink")) {
+            if (event.target.hasAttribute("data-button")) {
                 this.onTabClick(event);
                 event.preventDefault();
             }
@@ -24,7 +24,7 @@ export default class Controls {
 
         event.target.className += " active";
 
-        let table = event.target.getAttribute("data-tablink");
+        let table = event.target.getAttribute("data-button");
 
         this._elem.dispatchEvent(new CustomEvent("get-data", {
             bubbles: true,

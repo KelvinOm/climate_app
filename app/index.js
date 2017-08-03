@@ -1,3 +1,4 @@
+import "../assets/styles/styles.scss";
 import Chart from "./chart/";
 import Controls from "./controls/";
 
