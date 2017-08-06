@@ -1,5 +1,4 @@
 <h1>Климатический архив</h1>
-===========
 
 ## Демо
 [http://kelvinom.ru/](www.kelvinom.ru)
@@ -19,3 +18,4 @@ $ npm run dev
 ## Деплой
 ```sh
 $ npm run
+```
