@@ -1,7 +1,7 @@
 <h1>Климатический архив</h1>
 
 ## Демо
-[http://kelvinom.ru/](www.kelvinom.ru)
+[www.kelvinom.ru](http://kelvinom.ru/)
 
 ## Установка
 Установка зависимостей
