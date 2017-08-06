@@ -5,6 +5,7 @@
     margin-top: 45px;
     overflow-y: scroll;
     display: inline-block;
+    overflow: hidden;
     &__preloader {
         position: absolute;
         top: 50%;
