@@ -17,5 +17,5 @@ $ npm run dev
 
 ## Деплой
 ```sh
-$ npm run
+$ npm run build
 ```
