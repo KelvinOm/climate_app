@@ -56,6 +56,16 @@ module.exports = {
                         }
                     },
                     {
+                        loader: "postcss-loader",
+                        options: {
+                            sourceMap: IS_DEV,
+                            plugins: [
+                                require("autoprefixer")(),
+                                require("cssnano")()
+                            ]
+                        }
+                    },
+                    {
                         loader: "sass-loader",
                         options: {
                             sourceMap: IS_DEV,
