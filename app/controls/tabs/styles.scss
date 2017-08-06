@@ -1,7 +1,6 @@
 @import "../../../assets/styles/_variables.scss";
 
 .tabs {
-    margin-right: 60px;
     &__button {
         display: inline-block;
         text-transform: uppercase;
@@ -9,7 +8,7 @@
         outline: none;
         cursor: pointer;
         transition: all .3s linear;
-        font-size: 14px;
+        font-size: 15px;
         color:  lighten($main-text, 30%);
         padding: 10px 15px;
         background-color: transparent;
@@ -29,4 +28,3 @@
         }
     }
 }
-

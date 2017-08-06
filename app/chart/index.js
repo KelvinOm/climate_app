@@ -39,8 +39,8 @@ export default class Chart {
                 }
 
                 this._context.beginPath();
-                this._context.lineWidth = 0.5;
-                this._context.strokeStyle = "#e4e4e4";
+                this._context.lineWidth = 0.8;
+                this._context.strokeStyle = "#ccc";
                 this._context.moveTo(this._indent, i * 80 + 6);
                 this._context.lineTo(this._width, i * 80 + 6);
                 this._context.stroke();
@@ -73,8 +73,8 @@ export default class Chart {
                 }
 
                 this._context.beginPath();
-                this._context.lineWidth = 0.5;
-                this._context.strokeStyle = "#e4e4e4";
+                this._context.lineWidth = 0.8;
+                this._context.strokeStyle = "#ccc";
                 this._context.moveTo(this._indent, i * 80 + 6);
                 this._context.lineTo(this._width, i * 80 + 6);
                 this._context.stroke();
@@ -91,13 +91,13 @@ export default class Chart {
         }
 
         if (array.length <= 10) {
-            this._context.fillText("по месяцам", this._width - 56, 322);
+            this._context.fillText("по месяцам", this._width - 56, 318);
         } else {
-            this._context.fillText("по годам", this._width - 45, 322);
+            this._context.fillText("по годам", this._width - 45, 318);
         }
 
-        this._context.fillText(array[0].year + " год", this._indent, this._height - 5);
-        this._context.fillText(array[array.length - 1].year + " год", this._width - 45, this._height - 5);
+        this._context.fillText(array[0].year + " год", this._indent, this._height - 8);
+        this._context.fillText(array[array.length - 1].year + " год", this._width - 45, this._height - 8);
     }
 
     _drawTemperatureChart(array) {
