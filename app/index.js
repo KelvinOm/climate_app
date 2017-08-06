@@ -5,8 +5,11 @@ import Controls from "./controls/";
 const TEMPERATURE = require("json/temperature.json");
 const PRECIPITATION = require("json/precipitation.json");
 
+/**
+ * get or add data to IndexedDb and control chart view
+ * @class App
+ */
 class App {
-    
     constructor({elem}) {
         this._elem = elem;
 
@@ -24,13 +27,11 @@ class App {
             ]
         };
 
-        this.transaction = false;
+        this._transaction = false;
 
         this._initDB();
         this.getData("temperature");
         this._render();
-
-        // this._deleteDB();
     }
 
     _initDB() {
@@ -75,6 +76,11 @@ class App {
         };
     }
 
+    /**
+     * add data to indexedDB then call getData function
+     * @param {string} table
+     * @memberof App
+     */
     _addData(table) {
         let request = indexedDB.open(this._IDBSetting.name, this._IDBSetting.version);
         let getData = this.getData.bind(this);
@@ -112,6 +118,12 @@ class App {
         };
     }
 
+    /**
+     * create structure for IndexedDb from JSON
+     * @param {string} table
+     * @returns {Object} data
+     * @memberof App
+     */
     _createStructureForDb(table) {
         let data = {};
 
@@ -130,10 +142,16 @@ class App {
         return data;
     }
 
+    /**
+     * get data from IndexedDb and call drawChart function through callback
+     * or call addData function if tables empty or indexedDB does not exist
+     * @param {string} table
+     * @memberof App
+     */
     getData(table) {
         let request = indexedDB.open(this._IDBSetting.name, this._IDBSetting.version);
 
-        this.table = table;
+        this._table = table;
 
         request.onsuccess = () => {
             try {
@@ -141,7 +159,7 @@ class App {
 
                 let array = [];
                 let db = request.result;
-                let transaction = this.transaction = db.transaction([table], "readonly");
+                let transaction = this._transaction = db.transaction([table], "readonly");
                 let objectStore = transaction.objectStore(table);
 
                 let countRequest = objectStore.count();
@@ -170,14 +188,14 @@ class App {
                         console.log("array load finish or cursor null");
 
                         db.close();
-                        this.transaction = false;
-                        this._getDataCallback(array, this.table);
+                        this._transaction = false;
+                        this._getDataCallback(array, this._table);
                     }
                 }
             } catch (e) {
                 console.log(e);
 
-                this.transaction = false;
+                this._transaction = false;
                 this._addData(table);
             }
         };
@@ -202,25 +220,28 @@ class App {
         let chart = this.Chart = new Chart();
         container.appendChild(chart.getElem());
 
+        // listener of change tab
         controls.getElem().addEventListener("get-data", (event) => {
-            if (this.transaction) {
-                this.transaction.abort();
+            if (this._transaction) {
+                this._transaction.abort();
             }
             chart._showPreloader();
             let table = event.detail.value;
             this.getData(table);
         });
 
+        // listener of change year on slider
         controls.getElem().addEventListener("change-year", (event) => {
-            if (this.transaction) {
-                this.transaction.abort();
+            if (this._transaction) {
+                this._transaction.abort();
             }
             chart._showPreloader();
             this._firstYear = event.detail.firstYear;
             this._lastYear = event.detail.lastYear;
-            this.getData(this.table);
+            this.getData(this._table);
         });
     }
+
 }
 
 new App({

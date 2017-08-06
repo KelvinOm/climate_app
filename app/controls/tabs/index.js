@@ -1,7 +1,11 @@
 import "./styles.scss";
 import template from "./template.pug";
 
-export default class Controls {
+/**
+ * @export
+ * @class Tabs
+ */
+export default class Tabs {
     constructor() {
         this._render();
 
@@ -9,13 +13,17 @@ export default class Controls {
 
         this._elem.addEventListener("click", event => {
             if (event.target.hasAttribute("data-button")) {
-                this.onTabClick(event);
+                this._onTabClick(event);
                 event.preventDefault();
             }
         });
     }
 
-    onTabClick(event) {
+    /**
+     * @param {click} event
+     * @memberof Tabs
+     */
+    _onTabClick(event) {
         event.preventDefault();
 
         for (let i = 0; i < this._tabsCollection.length; i++) {

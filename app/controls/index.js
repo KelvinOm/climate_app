@@ -2,9 +2,13 @@ import "./styles.scss";
 import Tabs from "./tabs/";
 import Select from "./slider/";
 
+/**
+ * add controls to app
+ * @export
+ * @class Controls
+ */
 export default class Controls {
     constructor() {
-
         this._render();
     }
 

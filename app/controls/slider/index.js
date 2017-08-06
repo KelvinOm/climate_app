@@ -1,7 +1,11 @@
 import "./styles.scss";
 import template from "./template.pug";
 
-export default class Controls {
+/**
+ * @export
+ * @class Slider
+ */
+export default class Slider {
     constructor() {
         this.years = [1881, 2006];
 
@@ -19,6 +23,12 @@ export default class Controls {
         });
     }
 
+    /**
+     * clone native input range for create multiple regime
+     * create two custom property valueLow and valueHigh
+     * call setTooltipPosition when update
+     * @memberof Slider
+     */
     _creatRangeSlider() {
         let descriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
 
@@ -84,6 +94,13 @@ export default class Controls {
         update();
     }
 
+    /**
+     * set of tooltip position when drag thumb of slider
+     * @param {number} inputValue
+     * @param {number} ghostValue
+     * @param {string} type
+     * @memberof Slider
+     */
     _setTooltipPosition(inputValue, ghostValue, type) {
         if (type === "firstTooltip") {
             let currentPosition = inputValue * 2.5;
@@ -108,6 +125,10 @@ export default class Controls {
         }
     }
 
+    /**
+     * generate custom event when drag of thumb stop
+     * @memberof Slider
+     */
     _onDragStop() {
         this._elem.dispatchEvent(new CustomEvent("change-year", {
             bubbles: true,
@@ -131,4 +152,5 @@ export default class Controls {
     getElem() {
         return this._elem;
     }
+
 }

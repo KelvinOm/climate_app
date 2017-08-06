@@ -1,6 +1,11 @@
 import "./styles.scss";
 import template from "./template.pug";
 
+/**
+ * get data from app and draw chart
+ * @export
+ * @class Chart
+ */
 export default class Chart {
     constructor() {
         this._render();
@@ -16,12 +21,31 @@ export default class Chart {
         this._indent = 50;
     }
 
+    /**
+     * Draw grind and data chart
+     * @param {Array} array
+     * @param {string} table
+     * @memberof Chart
+     */
     drawChart(array, table) {
-        this._drawGrid(table, array);
+        this._drawGrid(array, table);
+
+        if (table === "temperature") {
+            this._drawTemperatureChart(array);
+        } else {
+            this._drawPrecipitationChart(array);
+        }
+
         this._hidePreloader();
     }
 
-    _drawGrid(table, array) {
+    /**
+     * draw grid of chart
+     * @param {Array} array
+     * @param {string} table
+     * @memberof Chart
+     */
+    _drawGrid(array, table) {
         if (table === "temperature") {
             this._context.font="11px PT Sans";
             this._context.textAlign="start";
@@ -56,12 +80,11 @@ export default class Chart {
             minLegend.classList.add("chart__legend--item", "blue");
             minLegend.innerHTML = "минимальная температура";
             this._legendContainer.appendChild(minLegend);
-
-            this._drawTemperatureChart(array);
         } else {
             for (let i = 0; i <= 4; i++) {
                 this._context.textAlign="start";
 
+                // if small array build chart of months
                 if (array.length <= 10) {
                     this._context.fillText(500 - i * 125 + " mm", 0, i * 80 + 10);
                 } else {
@@ -86,10 +109,9 @@ export default class Chart {
             meanLegend.classList.add("chart__legend--item", "blue");
             meanLegend.innerHTML = "среднее количество осадков";
             this._legendContainer.appendChild(meanLegend);
-
-            this._drawPrecipitationChart(array);
         }
 
+        // if small array build chart of months
         if (array.length <= 10) {
             this._context.fillText("по месяцам", this._width - 56, 318);
         } else {
@@ -100,6 +122,10 @@ export default class Chart {
         this._context.fillText(array[array.length - 1].year + " год", this._width - 45, this._height - 8);
     }
 
+    /**
+     * @param {Array} array
+     * @memberof Chart
+     */
     _drawTemperatureChart(array) {
         let yearTemperature = [];
 
@@ -134,6 +160,8 @@ export default class Chart {
         this._context.strokeStyle = "#cf000f";
         this._context.lineWidth = 2.5;
         this._context.lineJoin = "round";
+
+        // if small array build chart of months
         if (yearTemperature.length <= 10) {
             let step = (this._width - this._indent) / (yearTemperature.length * 11);
             let point = 0;
@@ -161,6 +189,8 @@ export default class Chart {
         this._context.strokeStyle = "#3498db";
         this._context.lineWidth = 2.5;
         this._context.lineJoin = "round";
+
+        // if small array build chart of months
         if (yearTemperature.length <= 10) {
             let step = (this._width - this._indent) / (yearTemperature.length * 11);
             let point = 0;
@@ -185,6 +215,10 @@ export default class Chart {
         this._context.stroke();
     }
 
+    /**
+     * @param {Array} array 
+     * @memberof Chart
+     */
     _drawPrecipitationChart(array) {
         let yearPrecipitation = [];
 
@@ -216,6 +250,7 @@ export default class Chart {
         this._context.lineWidth = 2.5;
         this._context.lineJoin = "round";
 
+        // if small array build chart of months
         if (yearPrecipitation.length <= 10) {
             let step = (this._width - this._indent) / (yearPrecipitation.length * 11);
             let point = 0;
@@ -244,7 +279,6 @@ export default class Chart {
 
     _showPreloader() {
         this._clearChart();
-
         this.preloader.style.display = "block";
         this.preloader.classList.remove("hide");
     }
