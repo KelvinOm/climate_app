@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic-ext');
 @import "_variables";
 
+:focus {
+    outline: 0;
+}
+
 html {
     box-sizing: border-box;
 }
@@ -11,4 +15,5 @@ html {
 
 body {
     font-family: 'PT Sans', sans-serif;
+    color: $main-text;
 }

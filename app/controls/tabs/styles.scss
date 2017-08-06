@@ -1,6 +1,7 @@
+@import "../../../assets/styles/_variables.scss";
+
 .tabs {
-    display: inline-block;
-    font-size: 0;
+    margin-right: 60px;
     &__button {
         display: inline-block;
         text-transform: uppercase;
@@ -9,7 +10,7 @@
         cursor: pointer;
         transition: all .3s linear;
         font-size: 14px;
-        color: #90959e;
+        color:  lighten($main-text, 30%);
         padding: 10px 15px;
         background-color: transparent;
         border: 1px solid transparent;
@@ -19,11 +20,12 @@
             margin-right: 0;
         }
         &:hover {
-            color: #8b9096;
+            color: $main-text;
         }
         &.active {
-            border: 1px solid #c2c6cc;
-            color: #4b4f54;
+            border: 1px solid $main-color;
+            color: $main-text;
+            cursor: default;
         }
     }
 }

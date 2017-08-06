@@ -79,7 +79,7 @@ class App {
         let request = indexedDB.open(this._IDBSetting.name, this._IDBSetting.version);
         let getData = this.getData.bind(this);
 
-        let data = table === "temperature" ? TEMPERATURE : PRECIPITATION;
+        let data = this._createStructureForDb(table);
 
         request.onsuccess = () => {
             try {
@@ -88,12 +88,12 @@ class App {
                 let db = request.result;
                 let transaction = db.transaction([table], "readwrite");
                 let objectStore = transaction.objectStore(table);
-                let i = 0;
+                let year = 1881;
 
                 let addNext = function() {
-                    if (i < data.length) {
-                        objectStore.add(data[i], data[i].t).onsuccess = addNext;
-                        ++i;
+                    if (year <= 2006) {
+                        objectStore.add(data[year], data[year].year).onsuccess = addNext;
+                        ++year;
                     } else {
                         console.log("populate complete");
                         getData(table);
@@ -110,6 +110,24 @@ class App {
         request.onerror = () => {
             console.log("addData indexedDB open fail");
         };
+    }
+
+    _createStructureForDb(table) {
+        let data = {};
+
+        let initialJSON = table === "temperature" ? TEMPERATURE : PRECIPITATION;
+
+        for (let i = 0; i < initialJSON.length; i++) {
+            let year = initialJSON[i].t.slice(0, -6);
+            let month = initialJSON[i].t.slice(5).slice(0, -3);
+
+            data[year] = data[year] ? data[year] : {};
+            data[year].year = year;
+            data[year][month] = data[year][month] ? data[year][month] : [];
+            data[year][month].push(initialJSON[i]);
+        }
+
+        return data;
     }
 
     getData(table) {
@@ -140,8 +158,8 @@ class App {
                     console.log("onerror count");
                 }
 
-                let lower = this._firstYear ? this._firstYear + "-01-01" : "1881-01-01";
-                let upper = this._lastYear ? this._lastYear + "-12-31" : "2006-12-31";
+                let lower = this._firstYear ? this._firstYear : "1881";
+                let upper = this._lastYear ? this._lastYear : "2006";
 
                 objectStore.openCursor(IDBKeyRange.bound(lower, upper)).onsuccess = (event) => {
                     let cursor = event.target.result;
@@ -153,7 +171,7 @@ class App {
 
                         db.close();
                         this.transaction = false;
-                        this._getDataCallback(array);
+                        this._getDataCallback(array, this.table);
                     }
                 }
             } catch (e) {
@@ -169,9 +187,9 @@ class App {
         };
     }
 
-    _getDataCallback(array) {
+    _getDataCallback(array, table) {
         if (array.length) {
-            this.Chart.drawChart(array);
+            this.Chart.drawChart(array, table);
         }
     }
 

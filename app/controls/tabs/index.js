@@ -1,5 +1,5 @@
-import template from "./template.pug";
 import "./styles.scss";
+import template from "./template.pug";
 
 export default class Controls {
     constructor() {
@@ -36,6 +36,7 @@ export default class Controls {
 
     _render() {
         let tmp = document.createElement("div");
+        tmp.classList.add("tabs");
         tmp.innerHTML = template({});
         this._elem = tmp;
     }

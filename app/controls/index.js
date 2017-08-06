@@ -1,5 +1,6 @@
+import "./styles.scss";
 import Tabs from "./tabs/";
-import Select from "./selects/";
+import Select from "./slider/";
 
 export default class Controls {
     constructor() {
@@ -9,6 +10,7 @@ export default class Controls {
 
     _render() {
         let tmp = document.createElement("div");
+        tmp.classList.add("controls-container");
 
         let tabs = this.tabs = new Tabs();
         tmp.appendChild(tabs.getElem());

@@ -1,9 +1,8 @@
-.graph {
+.chart {
     position: relative;
-    margin-top: 40px;
-    width: 800px;
-    height: 210px;
+    margin-top: 20px;
     overflow-y: scroll;
+    display: inline-block;
     &__preloader {
         position: absolute;
         top: 50%;
@@ -18,15 +17,39 @@
             opacity: 0;
         }
     }
-}
-
-::-webkit-scrollbar {
-    -webkit-appearance: none;
-    height: 7px;
-    width: 0;
-}
-
-::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: rgba(0,0,0,.5);
+    &__legend {
+        display: none;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-content: stretch;
+        align-items: center;
+        margin-top: 20px;
+        &.active {
+            display: flex;
+        }
+        &--temperature {
+            &:before {
+                content: "";
+                position: relative;
+                top: 2px;
+                margin-right: 8px;
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                border-radius: 50%;
+            }
+            &.max-temperature {
+                margin-right: 20px;
+                &:before {
+                    background-color: #cf000f;
+                }
+            }
+            &.min-temperature {
+                &:before {
+                    background-color: #3498db;
+                }
+            }
+        }
+    }
 }

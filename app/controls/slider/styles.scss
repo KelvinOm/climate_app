@@ -1,0 +1,96 @@
+@import "../../../assets/styles/_variables.scss";
+
+.slider {
+    position: relative;
+    font-size: 0;
+    &__year {
+        font-size: 12px;
+        font-weight: bold;
+        &--first {
+            float: left;
+            margin-right: 8px;
+        }
+        &--last {
+            float: right;
+            margin-left: 8px;
+        }
+    }
+    &__tooltip {
+        position: absolute;
+        font-size: 10px;
+        font-weight: bold;
+        background-color: rgba(0, 0, 0, .7);
+        padding: 3px 5px;
+        border-radius: 3px;
+        color: #fff;
+        min-width: 34px;
+        text-align: center;
+        opacity: 0;
+        transition: opacity .3s linear;
+        &.active {
+            opacity: 1;
+        }
+        &:before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            margin-left: -4px;
+            border: 4px solid transparent;
+            display: block;
+            width: 0;
+            height: 0;
+        }
+        &--first {
+            top: -26px;
+            left: 26px;
+            &:before {
+                bottom: -8px;
+                border-top: 4px solid rgba(0, 0, 0, .7);
+            }
+        }
+        &--last {
+            bottom: -26px;
+            left: 260px;
+            &:before {
+                top: -8px;
+                border-bottom: 4px solid rgba(0, 0, 0, .7);
+            }
+        }
+    }
+    &__controls {
+        position: absolute;
+        width: 250px;
+        padding: 0;
+        margin: 0;
+        display: inline-block;
+        vertical-align: top;
+        border: none;
+        &::-webkit-slider-thumb {
+            position: relative;
+            z-index: 2;
+            cursor: grabbing;
+        }
+        &::-moz-range-thumb {
+            cursor: grabbing;
+            transform: scale(1);
+            z-index: 1;
+        }
+        &::-moz-range-track {
+            border-color: transparent;
+        }
+        &.ghost {
+            position: relative;
+            width: 250px;
+            background: var(--track-background);
+            --track-background: linear-gradient(to right, transparent var(--low), var(--range-color) 0,
+            var(--range-color) var(--high), transparent 0) no-repeat 0 45% / 100% 40%;
+            --range-color: $main-color;
+            &::-webkit-slider-runnable-track {
+                background: var(--track-background);
+            }
+            &::-moz-range-track {
+                background: var(--track-background);
+            }
+        }
+    }
+}
